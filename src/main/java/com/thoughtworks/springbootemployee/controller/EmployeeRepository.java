@@ -14,8 +14,13 @@ public class EmployeeRepository {
     private static final List<Employee> employees = new ArrayList<>();
 
     static{
-        employees.add(new Employee(1L,"Gerard",30,"male",99999));
-        employees.add(new Employee(2L,"Kamran",30,"female",99239));
+        employees.add(new Employee(1L,"Gerard",25,"male",99999));
+        employees.add(new Employee(2L,"Aubrey",23,"female",99239));
+        employees.add(new Employee(3L,"Jo",24,"male",99239));
+        employees.add(new Employee(4L,"Ju",24,"female",99239));
+        employees.add(new Employee(5L,"Christian",24,"male",99239));
+        employees.add(new Employee(6L,"Manalac",24,"male",99239));
+        employees.add(new Employee(7L,"Joseph",24,"male",99239));
     }
 
     public List<Employee> listAll() {
@@ -49,5 +54,12 @@ public class EmployeeRepository {
                 .mapToLong(Employee::getId)
                 .max()
                 .orElse(0) + 1;
+    }
+
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        return employees.stream()
+                .skip((pageNumber - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
