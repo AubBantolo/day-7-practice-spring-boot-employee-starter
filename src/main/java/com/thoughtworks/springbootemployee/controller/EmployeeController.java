@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class EmployeeController {
     public List<Employee> listAll(){
         return employeeRepository.listAll();
     }
-
     @GetMapping("/{id}")
     public Employee findById(@PathVariable Long id){
         return employeeRepository.findById(id);
@@ -30,6 +30,7 @@ public class EmployeeController {
         return employeeRepository.findByGender(gender);
     }
 
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addEmployee")
     public Employee createEmployee (@RequestBody Employee employee){
         return employeeRepository.saveEmployee(employee);
