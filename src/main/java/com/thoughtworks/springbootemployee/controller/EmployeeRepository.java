@@ -11,10 +11,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
-
     private static final List<Employee> employees = new ArrayList<>();
-    private static final long ID_INCREMENT = 1 ;
-    private static final long START_ID_MINUS_ONE = 0L;
 
     static{
         employees.add(new Employee(1L,"Gerard",30,"male",99999));
@@ -51,6 +48,6 @@ public class EmployeeRepository {
         return employees.stream()
                 .mapToLong(Employee::getId)
                 .max()
-                .orElse(START_ID_MINUS_ONE) + ID_INCREMENT;
+                .orElse(0) + 1;
     }
 }
