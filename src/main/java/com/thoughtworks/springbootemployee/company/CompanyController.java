@@ -39,10 +39,17 @@ public class CompanyController {
     public Company createCompany (@RequestBody Company company){
         return companyRepository.saveCompany(company);
     }
+    @DeleteMapping("/deleteCompany/{id}")
+    public List<Company> deleteCompany(@PathVariable Long id){
+        return companyRepository.deleteCompany(id);
+    }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
         return companyRepository.listByPage(pageNumber, pageSize);
     }
+
+
+
 
 }

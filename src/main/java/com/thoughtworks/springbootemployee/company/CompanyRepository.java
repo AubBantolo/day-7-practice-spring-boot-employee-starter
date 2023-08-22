@@ -36,12 +36,18 @@ public class CompanyRepository {
         return company;
     }
 
+    public List<Company> deleteCompany(Long id) {
+        companies.remove(findById(id));
+        return companies;
+    }
+
     private Long generateNextId() {
         return companies.stream()
                 .mapToLong(Company::getId)
                 .max()
                 .orElse(0) + 1;
     }
+
 
     public List<Company> listByPage(Long pageNumber, Long pageSize) {
         return companies.stream()
