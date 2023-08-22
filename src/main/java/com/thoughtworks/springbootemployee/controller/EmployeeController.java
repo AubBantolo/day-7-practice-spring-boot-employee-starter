@@ -45,6 +45,11 @@ public class EmployeeController {
         return employee;
     }
 
+    @DeleteMapping("/deleteEmployee/{id}")
+    public List<Employee> deleteEmployee(@PathVariable Long id){
+        return employeeRepository.deleteEmployee(id);
+    }
+
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
         return employeeRepository.listByPage(pageNumber, pageSize);
@@ -52,3 +57,4 @@ public class EmployeeController {
 
 
 }
+

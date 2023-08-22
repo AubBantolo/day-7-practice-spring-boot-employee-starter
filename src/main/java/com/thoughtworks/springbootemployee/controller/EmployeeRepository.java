@@ -49,6 +49,11 @@ public class EmployeeRepository {
         return employeeToBeCreated;
     }
 
+    public List<Employee> deleteEmployee(Long id){
+        employees.remove(findById(id));
+        return employees;
+    }
+
     private Long generateNextId() {
         return employees.stream()
                 .mapToLong(Employee::getId)
