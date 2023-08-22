@@ -16,27 +16,28 @@ public class EmployeeController {
     private static final List<Employee> employees = new ArrayList<>();
 
     @GetMapping
-    public List<Employee> listAll(){
+    public List<Employee> listAll() {
         return employeeRepository.listAll();
     }
+
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable Long id){
+    public Employee findById(@PathVariable Long id) {
         return employeeRepository.findById(id);
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> findByGender(@RequestParam String gender){
+    public List<Employee> findByGender(@RequestParam String gender) {
         return employeeRepository.findByGender(gender);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addEmployee")
-    public Employee createEmployee (@RequestBody Employee employee){
+    public Employee createEmployee(@RequestBody Employee employee) {
         return employeeRepository.saveEmployee(employee);
     }
 
     @PutMapping("/updateEmployee/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee){
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee) {
         Employee employee = employeeRepository.findById(id);
         employee.setName(currentEmployee.getName());
         employee.setAge(currentEmployee.getAge());
@@ -46,12 +47,12 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/deleteEmployee/{id}")
-    public List<Employee> deleteEmployee(@PathVariable Long id){
+    public List<Employee> deleteEmployee(@PathVariable Long id) {
         return employeeRepository.deleteEmployee(id);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
+    public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return employeeRepository.listByPage(pageNumber, pageSize);
     }
 

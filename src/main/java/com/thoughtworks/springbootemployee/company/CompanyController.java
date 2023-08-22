@@ -20,44 +20,42 @@ public class CompanyController {
     private EmployeeRepository employeeRepository;
 
     @GetMapping()
-    public List<Company> listAll(){
+    public List<Company> listAll() {
         return companyRepository.listAll();
     }
 
     @GetMapping("/{id}")
-    public Company findById(@PathVariable Long id){
+    public Company findById(@PathVariable Long id) {
         return companyRepository.findById(id);
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> findEmployeesByCompanyId(@PathVariable Long id){
+    public List<Employee> findEmployeesByCompanyId(@PathVariable Long id) {
         return employeeRepository.findByCompanyId(id);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addCompany")
-    public Company createCompany (@RequestBody Company company){
+    public Company createCompany(@RequestBody Company company) {
         return companyRepository.saveCompany(company);
     }
 
     @PutMapping("/updateCompany/{id}")
-    public Company updateCompany(@PathVariable Long id, @RequestBody Company currentCompany){
+    public Company updateCompany(@PathVariable Long id, @RequestBody Company currentCompany) {
         Company company = companyRepository.findById(id);
         company.setName(currentCompany.getName());
         return company;
     }
 
     @DeleteMapping("/deleteCompany/{id}")
-    public List<Company> deleteCompany(@PathVariable Long id){
+    public List<Company> deleteCompany(@PathVariable Long id) {
         return companyRepository.deleteCompany(id);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
-    public List<Company> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
+    public List<Company> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
         return companyRepository.listByPage(pageNumber, pageSize);
     }
-
-
 
 
 }
