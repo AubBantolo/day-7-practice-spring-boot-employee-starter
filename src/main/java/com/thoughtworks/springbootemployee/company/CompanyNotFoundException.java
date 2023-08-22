@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class CompanyNotFoundException extends RuntimeException {
 
     public CompanyNotFoundException(){
-        super("Employee not found");
+        super("Company not found");
     }
 }
