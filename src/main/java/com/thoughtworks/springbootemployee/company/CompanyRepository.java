@@ -1,7 +1,5 @@
-package company;
+package com.thoughtworks.springbootemployee.company;
 
-import com.thoughtworks.springbootemployee.controller.Employee;
-import com.thoughtworks.springbootemployee.controller.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ public class CompanyRepository {
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
     }
-
 }
 
 

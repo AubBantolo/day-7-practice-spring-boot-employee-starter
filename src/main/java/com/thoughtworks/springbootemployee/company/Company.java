@@ -1,4 +1,4 @@
-package company;
+package com.thoughtworks.springbootemployee.company;
 
 public class Company {
 
