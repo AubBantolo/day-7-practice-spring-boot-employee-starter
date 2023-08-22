@@ -19,6 +19,16 @@ public class CompanyRepository {
         companies.add(new Company(4L, "Winter"));
     }
 
+    public List<Company> listAll() {
+        return companies;
+    }
+
+    public Company findById(Long id) {
+        return companies.stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(CompanyNotFoundException::new);
+    }
 
 }
 
