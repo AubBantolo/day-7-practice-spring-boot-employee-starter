@@ -1,7 +1,6 @@
-package com.thoughtworks.springbootemployee.company;
+package com.thoughtworks.springbootemployee.model;
 
 public class Company {
-
     private Long id;
 
     private String name;
