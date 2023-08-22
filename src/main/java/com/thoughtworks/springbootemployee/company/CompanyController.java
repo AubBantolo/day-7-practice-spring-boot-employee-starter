@@ -39,6 +39,14 @@ public class CompanyController {
     public Company createCompany (@RequestBody Company company){
         return companyRepository.saveCompany(company);
     }
+
+    @PutMapping("/updateCompany/{id}")
+    public Company updateCompany(@PathVariable Long id, @RequestBody Company currentCompany){
+        Company company = companyRepository.findById(id);
+        company.setName(currentCompany.getName());
+        return company;
+    }
+
     @DeleteMapping("/deleteCompany/{id}")
     public List<Company> deleteCompany(@PathVariable Long id){
         return companyRepository.deleteCompany(id);

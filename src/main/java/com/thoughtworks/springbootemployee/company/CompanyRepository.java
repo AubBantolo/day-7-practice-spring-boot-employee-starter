@@ -48,7 +48,6 @@ public class CompanyRepository {
                 .orElse(0) + 1;
     }
 
-
     public List<Company> listByPage(Long pageNumber, Long pageSize) {
         return companies.stream()
                 .skip((pageNumber - 1) * pageSize)
