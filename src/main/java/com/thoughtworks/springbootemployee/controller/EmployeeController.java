@@ -13,7 +13,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
     private static final List<Employee> employees = new ArrayList<>();
 
     @GetMapping
@@ -36,9 +35,20 @@ public class EmployeeController {
         return employeeRepository.saveEmployee(employee);
     }
 
+    @PutMapping("/updateEmployee/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee){
+        Employee employee = employeeRepository.findById(id);
+        employee.setName(currentEmployee.getName());
+        employee.setAge(currentEmployee.getAge());
+        employee.setGender(currentEmployee.getGender());
+        employee.setSalary(currentEmployee.getSalary());
+        return employee;
+    }
+
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize){
         return employeeRepository.listByPage(pageNumber, pageSize);
     }
+
 
 }
