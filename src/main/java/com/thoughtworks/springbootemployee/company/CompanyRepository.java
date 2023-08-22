@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.company;
 
+import com.thoughtworks.springbootemployee.controller.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -26,6 +27,19 @@ public class CompanyRepository {
                 .filter(company -> company.getId().equals(id))
                 .findFirst()
                 .orElseThrow(CompanyNotFoundException::new);
+    }
+
+    public Company saveCompany(Company company) {
+        company.setId(generateNextId());
+        companies.add(company);
+        return company;
+    }
+
+    private Long generateNextId() {
+        return companies.stream()
+                .mapToLong(Company::getId)
+                .max()
+                .orElse(0) + 1;
     }
 }
 

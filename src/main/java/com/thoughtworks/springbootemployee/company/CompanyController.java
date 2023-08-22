@@ -3,10 +3,8 @@ package com.thoughtworks.springbootemployee.company;
 import com.thoughtworks.springbootemployee.controller.Employee;
 import com.thoughtworks.springbootemployee.controller.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +32,11 @@ public class CompanyController {
     @GetMapping("/{id}/employees")
     public List<Employee> findEmployeesByCompanyId(@PathVariable Long id){
         return employeeRepository.findByCompanyId(id);
+    }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping("/addCompany")
+    public Company createCompany (@RequestBody Company company){
+        return companyRepository.saveCompany(company);
     }
 }
