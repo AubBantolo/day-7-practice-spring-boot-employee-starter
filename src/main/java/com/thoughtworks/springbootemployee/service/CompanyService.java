@@ -18,4 +18,8 @@ public class CompanyService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    public List<Company> listAll() {
+        return companyRepository.listAll();
+    }
+
 }

@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,12 @@ public class CompanyController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private CompanyService companyService;
+
     @GetMapping()
     public List<Company> listAll() {
-        return companyRepository.listAll();
+        return companyService.listAll();
     }
 
     @GetMapping("/{id}")
