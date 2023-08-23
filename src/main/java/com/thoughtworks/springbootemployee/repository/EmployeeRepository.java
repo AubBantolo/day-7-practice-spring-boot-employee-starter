@@ -45,13 +45,6 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public Employee deleteIdEmployee(Long id) {
-        Employee employee = findById(id);
-        employees.remove(employee);
-        employee.setActive(false);
-        employees.add(employee);
-        return employee;
-    }
 
     public Employee updateEmployee(Employee employee) {
         int index = employees.indexOf(employee);
