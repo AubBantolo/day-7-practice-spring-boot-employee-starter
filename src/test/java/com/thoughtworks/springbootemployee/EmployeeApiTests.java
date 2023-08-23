@@ -130,5 +130,23 @@ public class EmployeeApiTests {
         //Then
     }
 
+    @Test
+    void should_return_updated_employee_when_perform_put_employee_given_existing_employee_id_and_updated_data() throws Exception {
+        // Given
+        Employee existingEmployee = employeeRepository.saveEmployee(new Employee(1L, "Alice", 24, "Female", 9000, 1L));
+        Employee updatedEmployee = new Employee(existingEmployee.getId(), "Juliet", 23, "Female", 9000, 1L);
 
+        // When, Then
+        mockMvcClient.perform(MockMvcRequestBuilders.put("/employees/updateEmployee/" + existingEmployee.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(updatedEmployee)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(updatedEmployee.getId()))
+                .andExpect(jsonPath("$.name").value(updatedEmployee.getName()))
+                .andExpect(jsonPath("$.age").value(updatedEmployee.getAge()))
+                .andExpect(jsonPath("$.gender").value(updatedEmployee.getGender()))
+                .andExpect(jsonPath("$.salary").value(updatedEmployee.getSalary()))
+                .andExpect(jsonPath("$.companyId").value(updatedEmployee.getCompanyId()));
+    }
+ 
 }
