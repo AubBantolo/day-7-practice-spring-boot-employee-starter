@@ -30,7 +30,7 @@ public class Employee {
     }
 
     public boolean hasInvalidAge() {
-        return getAge() < MIN_VALID_AGE;
+        return getAge() < MIN_VALID_AGE ;
     }
 
     public void setId(Long id) {

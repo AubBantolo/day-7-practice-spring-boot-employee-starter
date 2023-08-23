@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -29,8 +28,9 @@ public class EmployeeApiTests {
     @Autowired
     private MockMvc mockMvcClient;
 
+
     @BeforeEach
-    void cleanupEmployeeData(){
+    void cleanupEmployeeData() {
         employeeRepository.cleanAll();
     }
 
@@ -79,13 +79,12 @@ public class EmployeeApiTests {
     }
 
     @Test
-    void should_return_list_of_employee_by_given_gender_when_perform_get_employee_given_gender() throws Exception{
+    void should_return_list_of_employee_by_given_gender_when_perform_get_employee_given_gender() throws Exception {
         //Given
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
-        Employee jul = employeeRepository.saveEmployee(new Employee(2L,"Jul", 23, "Male", 9000,1L));
 
         //When, Then
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender","Female"))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender", "Female"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(aubs.getId()))
@@ -104,8 +103,8 @@ public class EmployeeApiTests {
 
         //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees/addEmployee")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(aubs)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(aubs)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value("Aubs"))
@@ -118,13 +117,12 @@ public class EmployeeApiTests {
     @Test
     void should_return_the_employee_created_when_perform_post_employees_given_new_employee_with_JSON_format() throws Exception {
         //Given
-        ObjectMapper objectMapper = new ObjectMapper();
         Employee aubs = new Employee(1L, "Aubs", 23, "Female", 9000, 1L);
 
         //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees/addEmployee")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(aubs)))
+                        .content(new ObjectMapper().writeValueAsString(aubs)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value("Aubs"))
@@ -152,6 +150,7 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.salary").value(updatedEmployee.getSalary()))
                 .andExpect(jsonPath("$.companyId").value(updatedEmployee.getCompanyId()));
     }
+
     @Test
     void should_return_no_content_when_perform_delete_employee_given_existing_employee_id() throws Exception {
         //Given

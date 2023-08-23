@@ -2,14 +2,11 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
 import com.thoughtworks.springbootemployee.exception.EmployeeIsInactiveException;
-import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -67,15 +64,6 @@ public class EmployeeService {
 
     public Employee createEmployee(Employee employee) {
         return employeeRepository.saveEmployee(employee);
-    }
-
-    public Employee updateEmployee(Long id, Employee currentEmployee) {
-        Employee employee = employeeRepository.findById(id);
-        employee.setName(currentEmployee.getName());
-        employee.setAge(currentEmployee.getAge());
-        employee.setGender(currentEmployee.getGender());
-        employee.setSalary(currentEmployee.getSalary());
-        return employee;
     }
 
     public List<Employee> deleteEmployee(Long id) {
