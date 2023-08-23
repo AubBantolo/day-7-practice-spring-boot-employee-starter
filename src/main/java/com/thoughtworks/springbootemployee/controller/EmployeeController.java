@@ -47,7 +47,7 @@ public class EmployeeController {
         employee.setSalary(currentEmployee.getSalary());
         return employee;
     }
-
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @DeleteMapping("/deleteEmployee/{id}")
     public List<Employee> deleteEmployee(@PathVariable Long id) {
         return employeeRepository.deleteEmployee(id);
