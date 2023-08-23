@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -109,4 +110,25 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.salary").value(9000))
                 .andExpect(jsonPath("$.companyId").value(1L));
     }
+
+    @Test
+    void should_return_the_employee_created_when_perform_post_employees_given_new_employee_with_JSON_format() throws Exception {
+        //Given
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee aubs = new Employee(1L, "Aubs", 23, "Female", 9000, 1L);
+        //When
+        mockMvcClient.perform(MockMvcRequestBuilders.post("/employees/addEmployee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(aubs)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.name").value("Aubs"))
+                .andExpect(jsonPath("$.age").value(23))
+                .andExpect(jsonPath("$.gender").value("Female"))
+                .andExpect(jsonPath("$.salary").value(9000))
+                .andExpect(jsonPath("$.companyId").value(1L));
+        //Then
+    }
+
+
 }
