@@ -69,4 +69,8 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getCompanyId().equals(companyId))
                 .collect(Collectors.toList());
     }
+
+    public void cleanAll() {
+        employees.clear();
+    }
 }
