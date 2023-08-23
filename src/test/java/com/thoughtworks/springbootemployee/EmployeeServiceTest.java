@@ -72,10 +72,14 @@ public class EmployeeServiceTest {
         Employee employee = new Employee(1L, "Lucy", 19 , "Female", 3000, 1L);
         employee.setActive(false);
 
-        when(mockedEmployeeRepository.deleteEmployeeById(employee.getId())).thenReturn(employee);
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+        when(mockedEmployeeRepository.updateEmployee(employee)).thenReturn(employee);
         //When
         Employee employeeResponse = employeeService.delete(employee.getId());
         //Then
         assertFalse(employeeResponse.getActive());
     }
+
+
+
 }
