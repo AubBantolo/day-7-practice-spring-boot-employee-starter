@@ -69,7 +69,7 @@ public class EmployeeService {
         return employeeRepository.saveEmployee(employee);
     }
 
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee) {
+    public Employee updateEmployee(Long id, Employee currentEmployee) {
         Employee employee = employeeRepository.findById(id);
         employee.setName(currentEmployee.getName());
         employee.setAge(currentEmployee.getAge());
@@ -77,4 +77,9 @@ public class EmployeeService {
         employee.setSalary(currentEmployee.getSalary());
         return employee;
     }
+
+    public List<Employee> deleteEmployee(Long id) {
+        return employeeRepository.deleteEmployee(id);
+    }
+
 }
