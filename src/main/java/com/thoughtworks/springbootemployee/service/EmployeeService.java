@@ -68,4 +68,13 @@ public class EmployeeService {
     public Employee createEmployee(Employee employee) {
         return employeeRepository.saveEmployee(employee);
     }
+
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee) {
+        Employee employee = employeeRepository.findById(id);
+        employee.setName(currentEmployee.getName());
+        employee.setAge(currentEmployee.getAge());
+        employee.setGender(currentEmployee.getGender());
+        employee.setSalary(currentEmployee.getSalary());
+        return employee;
+    }
 }

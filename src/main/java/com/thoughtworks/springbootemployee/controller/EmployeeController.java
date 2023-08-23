@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @PutMapping("/updateEmployee/{id}")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee currentEmployee) {
-        Employee employee = employeeRepository.findById(id);
+        Employee employee = employeeService.findById(id);
         employee.setName(currentEmployee.getName());
         employee.setAge(currentEmployee.getAge());
         employee.setGender(currentEmployee.getGender());
