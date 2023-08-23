@@ -49,7 +49,7 @@ public class CompanyController {
 
     @PutMapping("/updateCompany/{id}")
     public Company updateCompany(@PathVariable Long id, @RequestBody Company currentCompany) {
-        Company company = companyRepository.findById(id);
+        Company company = companyService.findById(id);
         company.setName(currentCompany.getName());
         return company;
     }
