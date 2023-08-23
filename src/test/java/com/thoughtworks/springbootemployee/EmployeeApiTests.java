@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,4 +64,15 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.salary").value(aubs.getSalary()))
                 .andExpect(jsonPath("$.companyId").value(aubs.getCompanyId()));
     }
+
+    @Test
+    void should_return_404_when_not_found_given_employee_given_not_existing_id() throws Exception {
+        //Given
+        long notExistEmployeeId = 99L;
+        //When
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistEmployeeId))
+                .andExpect(status().isNotFound());
+    }
+
+
 }
