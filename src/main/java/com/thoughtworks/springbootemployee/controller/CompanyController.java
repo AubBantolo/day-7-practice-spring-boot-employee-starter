@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,10 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping()
     public List<Company> listAll() {
@@ -35,10 +33,9 @@ public class CompanyController {
         return companyService.findById(id);
     }
 
-    //change this EMPLOYEE!
     @GetMapping("/{id}/employees")
     public List<Employee> findEmployeesByCompanyId(@PathVariable Long id) {
-        return employeeRepository.findByCompanyId(id);
+        return employeeService.findEmployeesByCompanyId(id);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
