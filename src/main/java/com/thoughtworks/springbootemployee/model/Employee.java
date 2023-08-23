@@ -18,6 +18,11 @@ public class Employee {
         this.gender = gender;
         this.salary = salary;
         this.companyId = companyId;
+        this.isActive = true;
+    }
+
+    public Boolean getActive() {
+        return isActive;
     }
 
     public void setActive(Boolean isActive) {

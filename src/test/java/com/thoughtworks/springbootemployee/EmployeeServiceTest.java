@@ -7,10 +7,8 @@ import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
 
@@ -64,10 +62,20 @@ public class EmployeeServiceTest {
         when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(savedEmployee);
         //When
         Employee employeeResponse = employeeService.create(employee);
-
-        employee.setActive(true);
         //Then
+        assertTrue(employeeResponse.getActive());
     }
 
-    
+    @Test
+    void should_set_active_false_when_delete_given_employee_service_and_employee_id() {
+        //Given
+        Employee employee = new Employee(1L, "Lucy", 19 , "Female", 3000, 1L);
+        employee.setActive(false);
+
+        when(mockedEmployeeRepository.deleteEmployeeById(employee.getId())).thenReturn(employee);
+        //When
+        Employee employeeResponse = employeeService.delete(employee.getId());
+        //Then
+        assertFalse(employeeResponse.getActive());
+    }
 }
