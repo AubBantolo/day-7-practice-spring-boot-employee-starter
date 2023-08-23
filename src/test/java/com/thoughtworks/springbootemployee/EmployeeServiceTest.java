@@ -17,7 +17,7 @@ public class EmployeeServiceTest {
     private EmployeeRepository mockedEmployeeRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
         employeeService = new EmployeeService(mockedEmployeeRepository);
     }
@@ -25,8 +25,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_created_employee_when_create_given_employee_service_and_employee_with_valid_age() {
         //Given
-        Employee employee = new Employee(null, "Lucy", 20 , "Female", 3000, 1L);
-        Employee savedEmployee = new Employee(null, "Lucy", 20 , "Female", 3000, 1L);
+        Employee employee = new Employee(null, "Lucy", 20, "Female", 3000, 1L);
+        Employee savedEmployee = new Employee(null, "Lucy", 20, "Female", 3000, 1L);
 
         when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(savedEmployee);
         //When
@@ -44,7 +44,7 @@ public class EmployeeServiceTest {
     @Test
     void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_less_than_18() {
         //Given
-        Employee employee = new Employee(null, "Lucy", 16 , "Female", 3000, 1L);
+        Employee employee = new Employee(null, "Lucy", 16, "Female", 3000, 1L);
         //When
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () -> {
             employeeService.create(employee);
@@ -56,8 +56,8 @@ public class EmployeeServiceTest {
     @Test
     void should_set_employee_active_status_to_true_default_when_create_new_employee_given_employee_active_status() {
         //Given
-        Employee employee = new Employee(null, "Lucy", 19 , "Female", 3000, 1L);
-        Employee savedEmployee = new Employee(null, "Lucy", 20 , "Female", 3000, 1L);
+        Employee employee = new Employee(null, "Lucy", 19, "Female", 3000, 1L);
+        Employee savedEmployee = new Employee(null, "Lucy", 20, "Female", 3000, 1L);
 
         when(mockedEmployeeRepository.saveEmployee(employee)).thenReturn(savedEmployee);
         //When
@@ -69,17 +69,20 @@ public class EmployeeServiceTest {
     @Test
     void should_set_active_false_when_delete_given_employee_service_and_employee_id() {
         //Given
-        Employee employee = new Employee(1L, "Lucy", 19 , "Female", 3000, 1L);
+        Employee employee = new Employee(1L, "Lucy", 19, "Female", 3000, 1L);
         employee.setActive(false);
 
-        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
-        when(mockedEmployeeRepository.updateEmployee(employee)).thenReturn(employee);
         //When
-        Employee employeeResponse = employeeService.delete(employee.getId());
-        //Then
-        assertFalse(employeeResponse.getActive());
-    }
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+        employeeService.delete(employee.getId());
 
+        //Then
+        verify(mockedEmployeeRepository).updateEmployee(argThat(tempEmployee -> {
+            assertEquals(tempEmployee.getId(), employee.getId());
+            assertFalse(tempEmployee.getActive());
+            return true;
+        }));
+    }
 
 
 }
