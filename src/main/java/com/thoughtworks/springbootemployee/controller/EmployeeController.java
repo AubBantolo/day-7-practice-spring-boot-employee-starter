@@ -34,7 +34,7 @@ public class EmployeeController {
 
     @GetMapping(params = {"gender"})
     public List<Employee> findByGender(@RequestParam String gender) {
-        return employeeRepository.findByGender(gender);
+        return employeeService.findByGender(gender);
     }
 
     @ResponseStatus(value = HttpStatus.CREATED)
