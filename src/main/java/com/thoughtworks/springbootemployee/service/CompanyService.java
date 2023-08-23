@@ -1,11 +1,11 @@
 package com.thoughtworks.springbootemployee.service;
 
-
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -24,5 +24,9 @@ public class CompanyService {
 
     public Company findById(Long id) {
         return companyRepository.findById(id);
+    }
+
+    public Company createCompany(@RequestBody Company company) {
+        return companyRepository.saveCompany(company);
     }
 }

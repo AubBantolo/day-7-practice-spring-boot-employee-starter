@@ -35,6 +35,7 @@ public class CompanyController {
         return companyService.findById(id);
     }
 
+    //change this EMPLOYEE!
     @GetMapping("/{id}/employees")
     public List<Employee> findEmployeesByCompanyId(@PathVariable Long id) {
         return employeeRepository.findByCompanyId(id);
@@ -43,7 +44,7 @@ public class CompanyController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addCompany")
     public Company createCompany(@RequestBody Company company) {
-        return companyRepository.saveCompany(company);
+        return companyService.createCompany(company);
     }
 
     @PutMapping("/updateCompany/{id}")
