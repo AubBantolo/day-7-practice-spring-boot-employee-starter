@@ -82,4 +82,8 @@ public class EmployeeService {
         return employeeRepository.deleteEmployee(id);
     }
 
+    public List<Employee> listByPage(Long pageNumber, Long pageSize) {
+        return employeeRepository.listByPage(pageNumber, pageSize);
+    }
+
 }
