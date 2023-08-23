@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.exception.EmployeeCreateException;
+import com.thoughtworks.springbootemployee.exception.EmployeeIsInactiveException;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -63,14 +65,13 @@ public class EmployeeServiceTest {
         //When
         Employee employeeResponse = employeeService.create(employee);
         //Then
-        assertTrue(employeeResponse.getActive());
+        assertTrue(employeeResponse.isActive());
     }
 
     @Test
     void should_set_active_false_when_delete_given_employee_service_and_employee_id() {
         //Given
         Employee employee = new Employee(1L, "Lucy", 19, "Female", 3000, 1L);
-        employee.setActive(false);
 
         //When
         when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
@@ -79,10 +80,50 @@ public class EmployeeServiceTest {
         //Then
         verify(mockedEmployeeRepository).updateEmployee(argThat(tempEmployee -> {
             assertEquals(tempEmployee.getId(), employee.getId());
-            assertFalse(tempEmployee.getActive());
+            assertFalse(tempEmployee.isActive());
             return true;
         }));
     }
 
+    @Test
+    void should_verify_employee_active_or_not_when_updating_an_employee_given_employee_left_company() {
+        //Given
+        Employee employee = new Employee(1L, "Lucy", 19, "Female", 3000, 1L);
+        employee.setActive(false);
 
+        Employee updatedEmployee = new Employee(1L, "Lucy Test", 20, "Male", 3, 2L);
+
+        //When
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+
+        Exception exception = assertThrows(EmployeeIsInactiveException.class, () -> employeeService.update(updatedEmployee));
+
+        //Then
+        assertEquals("Employee is inactive", exception.getMessage());
+    }
+
+    @Test
+    void should_verify_employee_active_or_not_when_updating_an_employee_given_employee_still_in_the_company() {
+        //Given
+        Employee employee = new Employee(1L, "Lucy", 19, "Female", 3000, 1L);
+        employee.setActive(true);
+
+        Employee updatedEmployee = new Employee(1L, "Lucy Test", 20, "Male", 3, 2L);
+
+        //When
+        when(mockedEmployeeRepository.findById(employee.getId())).thenReturn(employee);
+        employeeService.update(updatedEmployee);
+
+        //Then
+        verify(mockedEmployeeRepository).updateEmployee(argThat(tempEmployee -> {
+            assertTrue(tempEmployee.isActive());
+            assertEquals(1L, tempEmployee.getId());
+            assertEquals("Lucy Test", tempEmployee.getName());
+            assertEquals(20, tempEmployee.getAge());
+            assertEquals("Male", tempEmployee.getGender());
+            assertEquals(3, tempEmployee.getSalary());
+            assertEquals(2L, tempEmployee.getCompanyId());
+            return true;
+        }));
+    }
 }

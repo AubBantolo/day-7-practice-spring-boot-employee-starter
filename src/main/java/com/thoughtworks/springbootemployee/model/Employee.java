@@ -9,7 +9,7 @@ public class Employee {
     private Integer salary;
 
     private Long companyId;
-    private Boolean isActive;
+    private boolean isActive;
 
     public Employee(Long id, String name, Integer age, String gender, Integer salary, Long companyId) {
         this.id = id;
@@ -21,11 +21,11 @@ public class Employee {
         this.isActive = true;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(Boolean isActive) {
+    public void setActive(boolean isActive) {
         this.isActive = isActive;
     }
 
