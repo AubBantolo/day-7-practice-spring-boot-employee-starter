@@ -51,6 +51,8 @@ public class EmployeeService {
         return employeeRepository.findByCompanyId(id);
     }
 
-
+    public List<Employee> listAll() {
+        return employeeRepository.listAll();
+    }
 
 }
