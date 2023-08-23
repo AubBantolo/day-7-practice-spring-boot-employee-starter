@@ -50,16 +50,15 @@ public class EmployeeApiTests {
     void should_return_the_employee_when_perform_given_employee_id() throws Exception {
         //Given
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
-        Employee juliet = employeeRepository.saveEmployee(new Employee(2L, "Juliet", 23, "Female", 9000, 2L));
+        employeeRepository.saveEmployee(new Employee(2L, "Juliet", 23, "Female", 9000, 2L));
         //When, Then
-        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + juliet.getId()))
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + aubs.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(aubs.getId()))
-                .andExpect(jsonPath("$[0].name").value(aubs.getName()))
-                .andExpect(jsonPath("$[0].age").value(aubs.getAge()))
-                .andExpect(jsonPath("$[0].gender").value(aubs.getGender()))
-                .andExpect(jsonPath("$[0].salary").value(aubs.getSalary()))
-                .andExpect(jsonPath("$[0].companyId").value(aubs.getCompanyId()));
+                .andExpect(jsonPath("$.id").value(aubs.getId()))
+                .andExpect(jsonPath("$.name").value(aubs.getName()))
+                .andExpect(jsonPath("$.age").value(aubs.getAge()))
+                .andExpect(jsonPath("$.gender").value(aubs.getGender()))
+                .andExpect(jsonPath("$.salary").value(aubs.getSalary()))
+                .andExpect(jsonPath("$.companyId").value(aubs.getCompanyId()));
     }
 }
