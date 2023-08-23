@@ -74,5 +74,23 @@ public class EmployeeApiTests {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void should_return_list_of_employee_by_given_gender_when_perform_get_employee_given_gender() throws Exception{
+        //Given
+        Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
+        Employee jul = employeeRepository.saveEmployee(new Employee(2L,"Jul", 23, "Male", 9000,1L));
+
+        //when
+        mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender","Female"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(aubs.getId()))
+                .andExpect(jsonPath("$[0].name").value(aubs.getName()))
+                .andExpect(jsonPath("$[0].age").value(aubs.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(aubs.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(aubs.getSalary()))
+                .andExpect(jsonPath("$[0].companyId").value(aubs.getCompanyId()));
+    }
+
 
 }
