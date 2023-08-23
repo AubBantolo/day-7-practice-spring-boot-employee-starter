@@ -61,7 +61,7 @@ public class CompanyController {
 
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Company> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {
-        return companyRepository.listByPage(pageNumber, pageSize);
+        return companyService.listByPage(pageNumber, pageSize);
     }
 
 

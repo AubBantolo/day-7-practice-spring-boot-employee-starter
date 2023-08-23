@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,7 +38,11 @@ public class CompanyService {
         return company;
     }
 
-    public List<Company> deleteCompany(@PathVariable Long id) {
+    public List<Company> deleteCompany(Long id) {
         return companyRepository.deleteCompany(id);
+    }
+
+    public List<Company> listByPage(Long pageNumber, Long pageSize) {
+        return companyRepository.listByPage(pageNumber, pageSize);
     }
 }
