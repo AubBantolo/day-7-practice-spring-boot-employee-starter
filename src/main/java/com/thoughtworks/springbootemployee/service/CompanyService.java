@@ -37,4 +37,7 @@ public class CompanyService {
         return company;
     }
 
+    public List<Company> deleteCompany(@PathVariable Long id) {
+        return companyRepository.deleteCompany(id);
+    }
 }

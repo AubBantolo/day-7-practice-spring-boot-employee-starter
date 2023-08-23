@@ -56,7 +56,7 @@ public class CompanyController {
 
     @DeleteMapping("/deleteCompany/{id}")
     public List<Company> deleteCompany(@PathVariable Long id) {
-        return companyRepository.deleteCompany(id);
+        return companyService.deleteCompany(id);
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
