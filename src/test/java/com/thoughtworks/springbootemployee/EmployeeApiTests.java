@@ -38,6 +38,7 @@ public class EmployeeApiTests {
     void should_return_all_give_employees_when_perform_given_employees() throws Exception {
         //Given
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
+
         //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
@@ -55,6 +56,7 @@ public class EmployeeApiTests {
         //Given
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
         employeeRepository.saveEmployee(new Employee(2L, "Juliet", 23, "Female", 9000, 2L));
+
         //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + aubs.getId()))
                 .andExpect(status().isOk())
@@ -70,7 +72,8 @@ public class EmployeeApiTests {
     void should_return_404_when_not_found_given_employee_given_not_existing_id() throws Exception {
         //Given
         long notExistEmployeeId = 99L;
-        //When
+
+        //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/" + notExistEmployeeId))
                 .andExpect(status().isNotFound());
     }
@@ -81,7 +84,7 @@ public class EmployeeApiTests {
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
         Employee jul = employeeRepository.saveEmployee(new Employee(2L,"Jul", 23, "Male", 9000,1L));
 
-        //when
+        //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.get("/employees/").param("gender","Female"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -99,6 +102,7 @@ public class EmployeeApiTests {
         ObjectMapper objectMapper = new ObjectMapper();
         Employee aubs = employeeRepository.saveEmployee(new Employee(1L, "Aubs", 23, "Female", 9000, 1L));
 
+        //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees/addEmployee")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(aubs)))
@@ -116,7 +120,8 @@ public class EmployeeApiTests {
         //Given
         ObjectMapper objectMapper = new ObjectMapper();
         Employee aubs = new Employee(1L, "Aubs", 23, "Female", 9000, 1L);
-        //When
+
+        //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.post("/employees/addEmployee")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(aubs)))
@@ -127,7 +132,6 @@ public class EmployeeApiTests {
                 .andExpect(jsonPath("$.gender").value("Female"))
                 .andExpect(jsonPath("$.salary").value(9000))
                 .andExpect(jsonPath("$.companyId").value(1L));
-        //Then
     }
 
     @Test
@@ -150,11 +154,10 @@ public class EmployeeApiTests {
     }
     @Test
     void should_return_no_content_when_perform_delete_employee_given_existing_employee_id() throws Exception {
-        //given
+        //Given
         Employee existingEmployee = employeeRepository.saveEmployee(new Employee(1L, "Alice", 24, "Female", 9000, 1L));
 
-        //when
-        //then
+        //When, Then
         mockMvcClient.perform(MockMvcRequestBuilders.delete("/employees/deleteEmployee/" + existingEmployee.getId()))
                 .andExpect(status().isNoContent());
     }
