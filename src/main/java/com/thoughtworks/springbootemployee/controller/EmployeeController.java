@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping(path = "/employees")
 @RestController
 public class EmployeeController {
-
+    //TODO: You can practice Constructor Injection rathen than field injection
     @Autowired
     private EmployeeService employeeService;
 
@@ -54,6 +54,7 @@ public class EmployeeController {
     public List<Employee> deleteEmployee(@PathVariable Long id) {
         return employeeService.deleteEmployee(id);
     }
+
     //TODO: HttpStatus.NOT_FOUND
     @GetMapping(params = {"pageNumber", "pageSize"})
     public List<Employee> listByPage(@RequestParam Long pageNumber, @RequestParam Long pageSize) {

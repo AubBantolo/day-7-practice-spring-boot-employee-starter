@@ -21,7 +21,7 @@ public class EmployeeService {
 
     public Employee create(Employee employee) {
 
-        if(employee.hasInvalidAge()){
+        if (employee.hasInvalidAge()) {
             throw new EmployeeCreateException();
         }
 

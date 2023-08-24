@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(path = "/companies")
 @RestController
 public class CompanyController {
-
+    //TODO: you can practice constructor injection rather than field injection
     @Autowired
     private CompanyService companyService;
 
